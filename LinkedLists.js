@@ -90,7 +90,7 @@ class LinkedList {
             this.tail = newNode;
         }
         this.length++;
-        return true;
+        return this;
     }
  
     pop() {
@@ -121,7 +121,7 @@ class LinkedList {
             this.head = newNode;
         }
         this.length++;
-        return true;
+        return this;
     }
  
     shift() {
@@ -154,18 +154,32 @@ class LinkedList {
         return false;
     }
  
-    insert(index, value){
-        if(index === 0) return this.unshift(value)
-        if(index.length === this.length) return this.push(value)
-        if(index < 0 || index > this.length) return false
+    insert(index, value) {
+        if (index < 0 || index > this.length) return false;
+        if (index === this.length) return this.push(value);
+        if (index === 0) return this.unshift(value);
+        
+        const newNode = new Node(value);
+        const temp = this.get(index - 1);
+        newNode.next = temp.next;
+        temp.next = newNode;
+        this.length++;
+        return true;
+    }
+ 
+    remove(index){
+        if(index === 0) return this.shift()
+        if(index === this.length - 1) return this.pop()
+        if(index < 0 || index > this.length) return undefined
 
-        const newNode = new Node(value)
-        const temp = this.get(index - 1)
+        const before = this.get(index - 1)
+        const temp = before.next
 
-        newNode.next = temp.next
-        temp.next = newNode
-        this.length++
-        return true
+        before.next = temp.next
+        temp.next = null
+        this.length--
+        return this
+
     }
 
 }
@@ -173,50 +187,59 @@ class LinkedList {
 
 
 let myLinkedList = new LinkedList(1);
+myLinkedList.push(2);
 myLinkedList.push(3);
+myLinkedList.push(4);
+myLinkedList.push(5);
 
-console.log("LL before insert():");
+console.log("LL before remove():");
 myLinkedList.printList();
 
-myLinkedList.insert(1, 2);
-
-console.log("\nLL after insert(2) in middle:");
+console.log("\nRemoved node:");
+console.log(myLinkedList.remove(2).value);
+console.log("LL after remove() in middle:");
 myLinkedList.printList();
 
-myLinkedList.insert(0, 0);
-
-console.log("\nLL after insert(0) at beginning:");
+console.log("\nRemoved node:");
+console.log(myLinkedList.remove(0).value);
+console.log("LL after remove() of first node:");
 myLinkedList.printList();
 
-myLinkedList.insert(4, 4);
-
-console.log("\nLL after insert(4) at end:");
+console.log("\nRemoved node:");
+console.log(myLinkedList.remove(2).value);
+console.log("LL after remove() of last node:");
 myLinkedList.printList();
 
 
 /*
     EXPECTED OUTPUT:
     ----------------
-    LL before insert():
-    1
-    3
-
-    LL after insert(2) in middle:
+    LL before remove():
     1
     2
     3
+    4
+    5
 
-    LL after insert(0) at beginning:
-    0
+    Removed node:
+    3
+    LL after remove() in middle:
     1
     2
-    3
+    4
+    5
 
-    LL after insert(4) at end:
-    0
+    Removed node:
     1
+    LL after remove() of first node:
     2
-    3
+    4
+    5
+
+    Removed node:
+    5
+    LL after remove() of last node:
+    2
     4
 
 */
