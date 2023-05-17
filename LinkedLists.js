@@ -111,17 +111,29 @@ class LinkedList {
         return temp;
     }
  
-    unshift(value){
-        const newNode = new Node(value)
-        if(!this.head){
-            this.head = newNode
-            this.tail = newNode
+    unshift(value) {
+        const newNode = new Node(value);
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
         } else {
-            newNode.next = this.head
-            this.head = newNode
+            newNode.next = this.head;
+            this.head = newNode;
         }
-        this.length++
-        return this
+        this.length++;
+        return this;
+    }
+ 
+    shift(){
+        if(!this.head) return undefined
+        let temp = this.head
+        this.head = this.head.next
+        temp.next = null
+        this.length--
+        if(this.length === 0){
+            this.tail = null
+        }
+        return temp
     }
 
 }
@@ -129,51 +141,35 @@ class LinkedList {
 
 
 let myLinkedList = new LinkedList(2);
-myLinkedList.push(3);
+myLinkedList.push(1);
 
-console.log("Before unshift():");
-console.log("-----------------");
-myLinkedList.getHead();
-myLinkedList.getTail();
-myLinkedList.getLength();
+// (2) Items in LL - Returns 2 Node
+if (myLinkedList.length !== 0) {
+    console.log(myLinkedList.shift().value);
+} else {
+    console.log("null");
+}
 
-console.log("\nLinked List:");
-myLinkedList.printList();
+// (1) Item in LL - Returns 1 Node
+if (myLinkedList.length !== 0) {
+    console.log(myLinkedList.shift().value);
+} else {
+    console.log("null");
+}
 
-myLinkedList.unshift(1);
-
-console.log("\nAfter unshift():");
-console.log("----------------");
-myLinkedList.getHead();
-myLinkedList.getTail();
-myLinkedList.getLength();
-
-console.log("\nLinked List:");
-myLinkedList.printList();
+// (0) Items in LL - Returns null
+if (myLinkedList.length !== 0) {
+    console.log(myLinkedList.shift().value);
+} else {
+    console.log("null");
+}
 
 
 /*
     EXPECTED OUTPUT:
-
-    Before unshift():
-    -----------------
-    Head: 2
-    Tail: 3
-    Length: 2
-
-    Linked List:
-    2
-    3
-
-    After unshift():
     ----------------
-    Head: 1
-    Tail: 3
-    Length: 3
-
-    Linked List:
-    1
     2
-    3
+    1
+    null
 
 */
