@@ -136,32 +136,57 @@ class LinkedList {
         return temp;
     }
  
-    get(index){
-        if (index < 0 || index >= this.length){
-            return undefined
+    get(index) {
+        if (index < 0 || index >= this.length) return undefined;
+        let temp = this.head;
+        for (let i = 0; i < index; i++) {
+            temp = temp.next;
         }
-        let temp = this.head
-        for(let i = 0; i < index; i++){
-            temp = temp.next
+        return temp;
+    }
+ 
+    set(index, value){
+        let temp = this.get(index)
+
+        if(temp){
+            temp.value = value
+            return true
         }
-        return temp
+        return false
     }
 
 }
  
-
+ 
 
 let myLinkedList = new LinkedList(0);
 myLinkedList.push(1);
 myLinkedList.push(2);
 myLinkedList.push(3);
 
-console.log(myLinkedList.get(3).value);
+console.log("Linked List before set():");
+myLinkedList.printList();
 
- 
+myLinkedList.set(2, 99);
+
+console.log("\nLinked List after set():");
+myLinkedList.printList();
+
+
+
 /*
     EXPECTED OUTPUT:
     ----------------
+    Linked List before set():
+    0
+    1
+    2
+    3
+
+    Linked List after set():
+    0
+    1
+    99
     3
 
 */
