@@ -167,19 +167,33 @@ class LinkedList {
         return true;
     }
  
-    remove(index){
-        if(index === 0) return this.shift()
-        if(index === this.length - 1) return this.pop()
-        if(index < 0 || index > this.length) return undefined
+    remove(index) {
+        if (index < 0 || index >= this.length) return undefined;
+        if (index === 0) return this.shift();
+        if (index === this.length - 1) return this.pop();
 
-        const before = this.get(index - 1)
-        const temp = before.next
+        const before = this.get(index - 1);
+        const temp = before.next;
 
-        before.next = temp.next
-        temp.next = null
-        this.length--
+        before.next = temp.next;
+        temp.next = null;
+        this.length--;
+        return temp;
+    }
+
+	reverse(){
+        let temp = this.head
+        this.head = this.tail
+        let next = temp.next
+        let prev = null
+
+        for(let i = 0; i < this.length; i++){
+            next = temp.next
+            temp.next = prev
+            prev = temp
+            temp = next
+        }
         return this
-
     }
 
 }
@@ -190,56 +204,29 @@ let myLinkedList = new LinkedList(1);
 myLinkedList.push(2);
 myLinkedList.push(3);
 myLinkedList.push(4);
-myLinkedList.push(5);
 
-console.log("LL before remove():");
+console.log("LL before reverse():");
 myLinkedList.printList();
 
-console.log("\nRemoved node:");
-console.log(myLinkedList.remove(2).value);
-console.log("LL after remove() in middle:");
-myLinkedList.printList();
+myLinkedList.reverse();
 
-console.log("\nRemoved node:");
-console.log(myLinkedList.remove(0).value);
-console.log("LL after remove() of first node:");
-myLinkedList.printList();
-
-console.log("\nRemoved node:");
-console.log(myLinkedList.remove(2).value);
-console.log("LL after remove() of last node:");
+console.log("\nLL after reverse():");
 myLinkedList.printList();
 
 
 /*
     EXPECTED OUTPUT:
     ----------------
-    LL before remove():
+    LL before reverse():
     1
     2
     3
     4
-    5
-
-    Removed node:
+    
+    LL after reverse():
+    4
     3
-    LL after remove() in middle:
+    2
     1
-    2
-    4
-    5
-
-    Removed node:
-    1
-    LL after remove() of first node:
-    2
-    4
-    5
-
-    Removed node:
-    5
-    LL after remove() of last node:
-    2
-    4
 
 */
