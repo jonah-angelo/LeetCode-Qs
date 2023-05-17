@@ -90,7 +90,7 @@ class LinkedList {
             this.tail = newNode;
         }
         this.length++;
-        return this;
+        return true;
     }
  
     pop() {
@@ -121,7 +121,7 @@ class LinkedList {
             this.head = newNode;
         }
         this.length++;
-        return this;
+        return true;
     }
  
     shift() {
@@ -145,48 +145,78 @@ class LinkedList {
         return temp;
     }
  
-    set(index, value){
-        let temp = this.get(index)
-
-        if(temp){
-            temp.value = value
-            return true
+    set(index, value) {
+        let temp = this.get(index);
+        if (temp) {
+            temp.value = value;
+            return true;
         }
-        return false
+        return false;
+    }
+ 
+    insert(index, value){
+        if(index === 0) return this.unshift(value)
+        if(index.length === this.length) return this.push(value)
+        if(index < 0 || index > this.length) return false
+
+        const newNode = new Node(value)
+        const temp = this.get(index - 1)
+
+        newNode.next = temp.next
+        temp.next = newNode
+        this.length++
+        return true
     }
 
 }
  
- 
 
-let myLinkedList = new LinkedList(0);
-myLinkedList.push(1);
-myLinkedList.push(2);
+
+let myLinkedList = new LinkedList(1);
 myLinkedList.push(3);
 
-console.log("Linked List before set():");
+console.log("LL before insert():");
 myLinkedList.printList();
 
-myLinkedList.set(2, 99);
+myLinkedList.insert(1, 2);
 
-console.log("\nLinked List after set():");
+console.log("\nLL after insert(2) in middle:");
 myLinkedList.printList();
 
+myLinkedList.insert(0, 0);
+
+console.log("\nLL after insert(0) at beginning:");
+myLinkedList.printList();
+
+myLinkedList.insert(4, 4);
+
+console.log("\nLL after insert(4) at end:");
+myLinkedList.printList();
 
 
 /*
     EXPECTED OUTPUT:
     ----------------
-    Linked List before set():
+    LL before insert():
+    1
+    3
+
+    LL after insert(2) in middle:
+    1
+    2
+    3
+
+    LL after insert(0) at beginning:
     0
     1
     2
     3
 
-    Linked List after set():
+    LL after insert(4) at end:
     0
     1
-    99
+    2
     3
+    4
 
 */
