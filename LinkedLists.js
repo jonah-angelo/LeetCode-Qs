@@ -124,14 +124,25 @@ class LinkedList {
         return this;
     }
  
-    shift(){
-        if(!this.head) return undefined
+    shift() {
+        if (this.length === 0) return undefined;
+        let temp = this.head;
+        this.head = this.head.next;
+        this.length--;
+        if (this.length === 0) {
+            this.tail = null;
+        }
+        temp.next = null;
+        return temp;
+    }
+ 
+    get(index){
+        if (index < 0 || index >= this.length){
+            return undefined
+        }
         let temp = this.head
-        this.head = this.head.next
-        temp.next = null
-        this.length--
-        if(this.length === 0){
-            this.tail = null
+        for(let i = 0; i < index; i++){
+            temp = temp.next
         }
         return temp
     }
@@ -140,36 +151,17 @@ class LinkedList {
  
 
 
-let myLinkedList = new LinkedList(2);
+let myLinkedList = new LinkedList(0);
 myLinkedList.push(1);
+myLinkedList.push(2);
+myLinkedList.push(3);
 
-// (2) Items in LL - Returns 2 Node
-if (myLinkedList.length !== 0) {
-    console.log(myLinkedList.shift().value);
-} else {
-    console.log("null");
-}
+console.log(myLinkedList.get(3).value);
 
-// (1) Item in LL - Returns 1 Node
-if (myLinkedList.length !== 0) {
-    console.log(myLinkedList.shift().value);
-} else {
-    console.log("null");
-}
-
-// (0) Items in LL - Returns null
-if (myLinkedList.length !== 0) {
-    console.log(myLinkedList.shift().value);
-} else {
-    console.log("null");
-}
-
-
+ 
 /*
     EXPECTED OUTPUT:
     ----------------
-    2
-    1
-    null
+    3
 
 */
