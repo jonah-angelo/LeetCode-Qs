@@ -1,4 +1,4 @@
-/* Interview Question - Has Loop */
+/* Interview Question */
 class Node {
     constructor(value) {
         this.value = value;
@@ -10,8 +10,7 @@ class LinkedList {
     constructor(value) {
         const newNode = new Node(value);
         this.head = newNode;
-        this.tail = newNode;
-        this.length = 1;
+        this.tail = this.head;
     }
 
     printList() {
@@ -38,10 +37,6 @@ class LinkedList {
         }
     }
 
-    getLength() {
-        console.log("Length: " + this.length);
-    }
-
     makeEmpty() {
         this.head = null;
         this.tail = null;
@@ -57,29 +52,21 @@ class LinkedList {
             this.tail.next = newNode;
             this.tail = newNode;
         }
-        this.length++;
     }
 
-    // WRITE HAS LOOP METHOD HERE // 
-    hasLoop() {
+    // the find middle node solution would be here!
+    findMiddleNode() {
         // Initialize slow and fast pointers at head
-        let slow = this.head;
-        let fast = this.head;
-        // Iterate through the list
-        while (fast !== null && fast.next !== null) {
-            // Move slow pointer one step
-            slow = slow.next;
-            // Move fast pointer two steps
-            fast = fast.next.next;
-            // If slow and fast pointers meet, loop exists
-            if (slow === fast) {
-                return true;
-            }
+        let slow = this.head
+        let fast = this.head
+        while (fast !== null && fast.next !== null){
+            slow = slow.next
+            fast = fast.next.next
         }
-        // If no loop is found, return false
-        return false;
+        return slow
     }
 }
+
 
 let myLinkedList = new LinkedList(1);
 myLinkedList.push(2);
@@ -90,14 +77,25 @@ myLinkedList.push(5);
 console.log("Original list:");
 myLinkedList.printList();
 
-const hasLoopResult = myLinkedList.hasLoop();
-console.log(`\nHas loop? ${hasLoopResult}`);
+const middleNode = myLinkedList.findMiddleNode();
+console.log(`\nMiddle node value: ${middleNode.value}`);
 
-// Create a loop for testing purposes
-myLinkedList.tail.next = myLinkedList.head.next; // Create a loop by linking tail to the second node
+// Create a new list with an even number of elements
+let myLinkedList2 = new LinkedList(1);
+myLinkedList2.push(2);
+myLinkedList2.push(3);
+myLinkedList2.push(4);
+myLinkedList2.push(5);
+myLinkedList2.push(6);
+myLinkedList2.push(7);
+myLinkedList2.push(8);
+myLinkedList2.push(9);
 
-const hasLoopResultAfterLoop = myLinkedList.hasLoop();
-console.log(`\nHas loop after creating a loop? ${hasLoopResultAfterLoop}`);
+console.log("\nOriginal list 2:");
+myLinkedList2.printList();
+
+const middleNode2 = myLinkedList2.findMiddleNode();
+console.log(`\nMiddle node value of list 2: ${middleNode2.value}`);
 
 
 /*
@@ -109,6 +107,13 @@ console.log(`\nHas loop after creating a loop? ${hasLoopResultAfterLoop}`);
     3
     4
     5
-    Has loop? false
-    Has loop after creating a loop? true
+    Middle node value: 3
+    Original list 2:
+    1
+    2
+    3
+    4
+    5
+    6
+    Middle node value of list 2: 4
 */

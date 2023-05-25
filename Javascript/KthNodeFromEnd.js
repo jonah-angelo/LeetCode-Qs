@@ -1,4 +1,5 @@
-/* Interview Question */
+/* Find Kth Node From End */
+
 class Node {
     constructor(value) {
         this.value = value;
@@ -54,23 +55,24 @@ class LinkedList {
         }
     }
 
-    // the find middle node solution would be here!
-    findMiddleNode() {
+    // WRITE THE FINDKTFROMEND METHOD HERE // 
+    findKthFromEnd(k) {
         // Initialize slow and fast pointers at head
-        let slow = this.head;
-        let fast = this.head;
-        // Iterate through the list
-        while (fast !== null && fast.next !== null) {
-            // Move slow pointer one step
-            slow = slow.next;
-            // Move fast pointer two steps
-            fast = fast.next.next;
+        let slow = this.head
+        let fast = this.head
+        for (let i = 0; i < k; i++){
+            if (fast === null){
+                return null
+            }
+            fast = fast.next
         }
-        // Return middle node when fast reaches end
-        return slow;
+        while(fast !== null){
+            fast = fast.next
+            slow = slow.next
+        }
+        return slow
     }
 }
-
 
 let myLinkedList = new LinkedList(1);
 myLinkedList.push(2);
@@ -81,22 +83,15 @@ myLinkedList.push(5);
 console.log("Original list:");
 myLinkedList.printList();
 
-const middleNode = myLinkedList.findMiddleNode();
-console.log(`\nMiddle node value: ${middleNode.value}`);
+const k = 2;
+const kthNodeFromEnd = myLinkedList.findKthFromEnd(k);
 
-// Create a new list with an even number of elements
-let myLinkedList2 = new LinkedList(1);
-myLinkedList2.push(2);
-myLinkedList2.push(3);
-myLinkedList2.push(4);
-myLinkedList2.push(5);
-myLinkedList2.push(6);
-
-console.log("\nOriginal list 2:");
-myLinkedList2.printList();
-
-const middleNode2 = myLinkedList2.findMiddleNode();
-console.log(`\nMiddle node value of list 2: ${middleNode2.value}`);
+console.log(`\n${k}th node from the end:`);
+if (kthNodeFromEnd) {
+    console.log(kthNodeFromEnd.value);
+} else {
+    console.log("Not found");
+}
 
 
 /*
@@ -108,13 +103,6 @@ console.log(`\nMiddle node value of list 2: ${middleNode2.value}`);
     3
     4
     5
-    Middle node value: 3
-    Original list 2:
-    1
-    2
-    3
+    2th node from the end:
     4
-    5
-    6
-    Middle node value of list 2: 4
 */
